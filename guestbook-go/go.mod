@@ -1,6 +1,6 @@
 module github.com/Sabarivenkatesh3/guestbook-go-container
 
-go 1.23.0
+go 1.23
 
 require (
 	github.com/codegangsta/negroni v1.0.0
