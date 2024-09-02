@@ -22,8 +22,8 @@ FROM alpine:3.18
 # Copy the binary from the first stage
 COPY --from=build /app/guestbook /guestbook
 
-# Expose port 8080 to the outside world
-EXPOSE 8080
+# Expose port 3000 to the outside world
+EXPOSE 3000
 
 # Command to run the executable
 ENTRYPOINT ["/guestbook"]
