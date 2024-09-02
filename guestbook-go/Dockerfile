@@ -1,10 +1,10 @@
-# Use the official Golang image as a build stage
-FROM golang:1.23 AS build
+# First stage: build the Go binary
+FROM golang:1.20 as build
 
 # Set the Current Working Directory inside the container
 WORKDIR /app
 
-# Copy the Go Modules manifests
+# Copy go mod and sum files
 COPY go.mod go.sum ./
 
 # Download all dependencies. Dependencies will be cached if the go.mod and go.sum files are not changed
@@ -16,14 +16,14 @@ COPY . .
 # Build the Go app
 RUN go build -o guestbook .
 
-# Start a new stage from scratch
-FROM scratch
+# Second stage: a very small image
+FROM alpine:3.12
 
-# Copy the Pre-built binary file from the previous stage
+# Copy the binary from the first stage
 COPY --from=build /app/guestbook /guestbook
-
-# Command to run the executable
-ENTRYPOINT ["/guestbook"]
 
 # Expose port 8080 to the outside world
 EXPOSE 8080
+
+# Command to run the executable
+ENTRYPOINT ["/guestbook"]
