@@ -1,5 +1,5 @@
 # First stage: build the Go binary
-FROM golang:1.20 as build
+FROM golang:1.21 as build
 
 # Set the Current Working Directory inside the container
 WORKDIR /app
@@ -17,7 +17,7 @@ COPY . .
 RUN go build -o guestbook .
 
 # Second stage: a very small image
-FROM alpine:3.12
+FROM alpine:3.18
 
 # Copy the binary from the first stage
 COPY --from=build /app/guestbook /guestbook
